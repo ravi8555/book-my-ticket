@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { eq } from 'drizzle-orm';
 import {db} from '../../../db/index.js'
 import { users } from '../../../db/schema.js' 
@@ -5,6 +6,7 @@ import ApiError from '../../../utills/api-error.js';
 import { PasswordUtills } from '../../../utills/password.utils.js';
 import { TokenUtills } from '../../../utills/token.utills.js';
 import  { EmailUtils } from '../../../utills/email.utills.js'
+
 
 class AuthService{
     async registerUserService (userData){
@@ -327,7 +329,7 @@ class AuthService{
             .where(eq(users.id, user.id))
 
         // Send reset email
-    const resetUrl = `http://localhost:8080/reset-password?token=${resetToken.rawToken}`;
+    const resetUrl = `${process.env.APP_URL}/reset-password?token=${resetToken.rawToken}`;
    
    // Make sure it's like this:
     await EmailUtils.sendPasswordResetEmail(user.email, resetUrl, user.name)

@@ -32,8 +32,18 @@ hence pool connection put on the seperate files to make connection with auth, se
 
 const app = express();
 // //Ravindra edited code start here for auth
+// const isProduction = process.env.NODE_ENV === 'production';
+// const corsOptions = {
+//   origin: isProduction 
+//     ? 'https://book-my-ticket-blond.vercel.app'
+//     : 'http://localhost:8080',
+//   credentials: true
+// };
+
+// app.use(cors(corsOptions));
+
 app.use(cors({
-  origin: 'http://localhost:8080',
+  origin: 'https://book-my-ticket-blond.vercel.app',
   credentials: true  
 }));
 app.use(express.json());  
