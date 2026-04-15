@@ -1,4 +1,4 @@
-# 🎬 Stellar Seat Booking System
+# 🎬 Cinema Seat Booking System
 
 A full-stack cinema seat booking application with complete authentication system including JWT tokens, email verification, and password reset functionality.
 
@@ -88,14 +88,14 @@ book-my-ticket/
 
 1. **Clone the repository**
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/ravi8555/book-my-ticket/>
 cd book-my-ticket
 
-Install dependencies
+2. Install dependencies
 
 npm install
 
-Set up environment variables
+3. Set up environment variables
 
 Create a .env file in the root directory:
 
@@ -116,7 +116,7 @@ BREVO_SMTP_PASSWORD=your_brevo_smtp_key
 BREVO_FROM_NAME=Your App Name
 BREVO_FROM_EMAIL=noreply@yourdomain.com
 
-Create database tables
+4. Create database tables
 
 -- Users table
 CREATE TABLE "user" (
@@ -151,19 +151,19 @@ INSERT INTO seats (isbooked) SELECT 0 FROM generate_series(1, 20);
 CREATE INDEX idx_user_email ON "user"(email);
 CREATE INDEX idx_user_verification_token ON "user"(verification_token);
 
-Run Drizzle migrations (if needed)
+5. Run Drizzle migrations (if needed)
 
 npx drizzle-kit generate
 npx drizzle-kit migrate
 
-Start the server
+6. Start the server
 node index.mjs
 
-Open your browser
+7. Open your browser
 
 http://localhost:8080
-
- API Endpoints
+```
+### API Endpoints
 Authentication Routes (/auth)
 Method	Endpoint	Description	Auth Required
 POST	/sign-up	Register new user	❌
@@ -177,13 +177,13 @@ POST	/logout	Logout user	✅
 POST	/refresh-token	Refresh access token	❌
 
 
-Seat Booking Routes
+### Seat Booking Routes
 Method	Endpoint	Description	Auth Required
 GET	/seats	Get all seats	❌
 PUT	/:id/:name	Book a seat	✅
 
 
-Contributing
+### Contributing
 Fork the repository
 
 Create your feature branch (git checkout -b feature/AmazingFeature)
@@ -194,26 +194,24 @@ Push to the branch (git push origin feature/AmazingFeature)
 
 Open a Pull Request
 
-📝 License
+## 📝 License
 This project is licensed under the MIT License.
 
-👨‍💻 Author
-Your Name - [Your GitHub]
+## 👨‍💻 Author
+Ravindra Dhadave - https://github.com/ravi8555/book-my-ticket/
 
-🙏 Acknowledgments
-ChaiCode Community
+## 🙏 Acknowledgments
+#ChaiCode Community
 
-Tailwind CSS for beautiful styling
+#Tailwind CSS for beautiful styling
 
-Brevo for email services
+#Brevo for email services
 
-PostgreSQL for reliable database
+#PostgreSQL for reliable database
 
-🐛 Known Issues & Future Improvements
+## 🐛 Known Issues & Future Improvements
 Current Limitations
-Access token not automatically invalidated on logout (expires naturally in 15 min)
 
-No admin panel for managing seats
 
 No payment integration
 
