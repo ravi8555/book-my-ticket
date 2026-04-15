@@ -23,7 +23,7 @@ export class EmailUtils {
       `📧 Preparing to send verification email to ${email} via Brevo...`,
     )
 
-    const verificationUrl = `http://localhost:8080/auth/verify-email?token=${token}`
+    const verificationUrl = `https://book-my-ticket-blond.vercel.app/auth/verify-email?token=${token}`
 
     const mailOptions = {
       from: {
@@ -53,7 +53,7 @@ export class EmailUtils {
                 <body>
                     <div class="container">
                         <div class="header">
-                            <h1>Welcome to Our App!</h1>
+                            <h1>Welcome to Book My Seats!</h1>
                         </div>
                         <div class="content">
                             <h2>Hello ${name}!</h2>
