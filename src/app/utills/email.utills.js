@@ -53,7 +53,7 @@ export class EmailUtils {
                 <body>
                     <div class="container">
                         <div class="header">
-                            <h1>Welcome to Book My Seats!</h1>
+                            <h1>Welcome to Book My Ticket!</h1>
                         </div>
                         <div class="content">
                             <h2>Hello ${name}!</h2>

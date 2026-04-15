@@ -29,7 +29,7 @@ class AuthService{
 
         //generate verification token
         const verificationToken = TokenUtills.generateResetToken()
-        const tokenExpiry = new Date(Date.now() + 120 * 60 * 1000); // 15 minutes
+        const tokenExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
 
         // create user
         const [newUser] = await db
@@ -172,7 +172,7 @@ class AuthService{
 
         // check if email is verified
         if(!user.isVerified){
-            throw ApiError.unauthorized("Please verify your email before logging in")
+            throw ApiError.unauthorized("Email not verified. Please check your inbox or request a new verification link")
         }
 
         // verfied password
@@ -316,7 +316,7 @@ class AuthService{
 
         // Generate reset token
         const resetToken = TokenUtills.generateResetToken();
-        const tokenExpiry = new Date(Date.now() + 120 * 60 * 1000); // 1 hour
+        const tokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
         // save token to DB
         await db

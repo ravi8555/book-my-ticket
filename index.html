@@ -212,9 +212,25 @@
           run(); // Refresh seats after login
           alert('Login successful!');
         } else {
-          alert('Login failed: ' + data.message);
+          if (data.message.includes("Email not verified")) {
+            const resend = confirm("Email not verified. Do you want to resend verification email?");
+            if (resend) {
+                await resendVerification(email);
+            }
+        } else {
+            alert('Login failed: ' + data.message);
+        }
         }
       }
+      async function resendVerification(email) {
+    const res = await fetch('/auth/resend-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    alert(data.message);
+}
 
       async function signup() {
         const name = document.getElementById('signupName').value;
