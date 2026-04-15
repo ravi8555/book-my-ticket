@@ -29,7 +29,7 @@ class AuthService{
 
         //generate verification token
         const verificationToken = TokenUtills.generateResetToken()
-        const tokenExpiry = new Date(Date.now() + 30 * 60 * 1000); // 15 minutes
+        const tokenExpiry = new Date(Date.now() + 120 * 60 * 1000); // 15 minutes
 
         // create user
         const [newUser] = await db
@@ -130,7 +130,7 @@ class AuthService{
 
         // generate new verification token
         const verificationToken = TokenUtills.generateResetToken();
-        const tokenExpiry =  new Date( Date.now() + 30 * 60 *1000) 
+        const tokenExpiry =  new Date( Date.now() + 60 * 60 *1000) 
 
         // update user with new token
         await db
@@ -316,7 +316,7 @@ class AuthService{
 
         // Generate reset token
         const resetToken = TokenUtills.generateResetToken();
-        const tokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+        const tokenExpiry = new Date(Date.now() + 120 * 60 * 1000); // 1 hour
 
         // save token to DB
         await db
