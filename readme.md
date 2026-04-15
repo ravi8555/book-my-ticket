@@ -158,12 +158,12 @@ npx drizzle-kit migrate
 
 Start the server
 node index.mjs
-
+``
 Open your browser
 
 http://localhost:8080
 
- API Endpoints
+API Endpoints
 Authentication Routes (/auth)
 Method	Endpoint	Description	Auth Required
 POST	/sign-up	Register new user	❌

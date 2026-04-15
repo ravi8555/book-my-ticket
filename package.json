@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "start": "node index.mjs",
+    "vercel-build": "npm install"
   },
   "keywords": [],
   "author": "",
