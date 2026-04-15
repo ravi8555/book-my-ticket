@@ -15,7 +15,7 @@ import cors from "cors";
 import { pool } from "./src/app/db/pool.js";
 import { authRouter } from "./src/app/modules/auth/routes/auth.routes.js";
 import { authenticationMiddleware } from "./src/app/modules/auth/middleware/auth.middleware.js";  // ✅ Add this
-
+import 'dotenv/config'
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const port = process.env.PORT || 8080;
 
@@ -32,20 +32,20 @@ hence pool connection put on the seperate files to make connection with auth, se
 
 const app = express();
 // //Ravindra edited code start here for auth
-// const isProduction = process.env.NODE_ENV === 'production';
-// const corsOptions = {
-//   origin: isProduction 
-//     ? 'https://book-my-ticket-blond.vercel.app'
-//     : 'http://localhost:8080',
-//   credentials: true
-// };
+const isProduction = process.env.NODE_ENV === 'production';
+const corsOptions = {
+  origin: isProduction 
+    ? 'https://book-my-ticket-blond.vercel.app'
+    : 'http://localhost:8080',
+  credentials: true
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
-app.use(cors({
-  origin: 'https://book-my-ticket-blond.vercel.app',
-  credentials: true  
-}));
+// app.use(cors({
+//   origin: 'https://book-my-ticket-blond.vercel.app',
+//   credentials: true  
+// }));
 app.use(express.json());  
 app.use(cookieParser()); 
 app.use('/auth', authRouter);
