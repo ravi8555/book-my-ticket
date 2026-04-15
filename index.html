@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stellar Seat Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap");
+      body {
+        font-family: "Outfit", sans-serif;
+        background-color: #0f172a;
+        color: #f8fafc;
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+  >
+    <div
+      class="max-w-7xl w-full bg-slate-800/80 backdrop-blur-xl rounded-3xl shadow-2xl p-10 border border-slate-700/50"
+    >
+      <!-- Auth Header -->
+      <div class="flex justify-between items-center mb-6">
+        <div id="userInfo" class="text-slate-300"></div>
+        <div id="authButtons" class="flex gap-3">
+          <button onclick="showLoginModal()" class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-400">Login</button>
+          <button onclick="showSignupModal()" class="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-400">Sign Up</button>
+        </div>
+      </div>
+
+      <div class="text-center mb-10">
+        <h1
+          class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-4 tracking-tight"
+        >
+          ChaiCode Cinema - Now Showing<br />
+          <br />
+          <span class="text-red-400">
+            <span class="font-bold">Dhurandhar The Revenge</span>
+          </span>
+        </h1>
+        <p class="text-slate-400 text-lg">Jassi ko ghar ki yaad kyu nhi aai?</p>
+      </div>
+
+      <div class="flex justify-center mb-10">
+        <div
+          class="bg-slate-900/50 rounded-full px-6 py-3 border border-slate-700 flex gap-8 items-center"
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="w-4 h-4 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.6)]"
+            ></div>
+            <span class="text-slate-300 font-medium tracking-wide"
+              >Available</span>
+          </div>
+          <div class="w-px h-6 bg-slate-700"></div>
+          <div class="flex items-center gap-3">
+            <div
+              class="w-4 h-4 rounded-full bg-rose-500/20 border border-rose-500/50"
+            ></div>
+            <span class="text-slate-400 font-medium tracking-wide">Booked</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <div
+          class="bg-slate-900/40 p-8 rounded-2xl border border-slate-700/50 shadow-inner"
+        >
+          <table
+            id="tbl"
+            class="border-separate border-spacing-4 mx-auto"
+          ></table>
+        </div>
+      </div>
+    </div>
+
+   <!-- Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div class="bg-slate-800 p-8 rounded-2xl w-96 border border-slate-700">
+    <h2 class="text-2xl font-bold mb-4">Login</h2>
+    <input type="email" id="loginEmail" placeholder="Email" class="w-full p-2 mb-3 rounded bg-slate-900 text-white border border-slate-700">
+    <input type="password" id="loginPassword" placeholder="Password" class="w-full p-2 mb-3 rounded bg-slate-900 text-white border border-slate-700">
+    <button onclick="login()" class="w-full bg-emerald-500 text-white p-2 rounded hover:bg-emerald-400">Login</button>
+    <button onclick="showForgotPasswordModal()" class="w-full mt-2 text-cyan-400 text-sm hover:text-cyan-300">Forgot Password?</button>
+    <button onclick="closeModals()" class="w-full mt-2 text-slate-400">Cancel</button>
+  </div>
+</div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+      <div class="bg-slate-800 p-8 rounded-2xl w-96 border border-slate-700">
+        <h2 class="text-2xl font-bold mb-4">Sign Up</h2>
+        <input type="text" id="signupName" placeholder="Name" class="w-full p-2 mb-3 rounded bg-slate-900 text-white border border-slate-700">
+        <input type="email" id="signupEmail" placeholder="Email" class="w-full p-2 mb-3 rounded bg-slate-900 text-white border border-slate-700">
+        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-2 mb-3 rounded bg-slate-900 text-white border border-slate-700">
+        <button onclick="signup()" class="w-full bg-cyan-500 text-white p-2 rounded hover:bg-cyan-400">Sign Up</button>
+        <button onclick="closeModals()" class="w-full mt-2 text-slate-400">Cancel</button>
+       
+      
+      
+      </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+<div id="forgotPasswordModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div class="bg-slate-800 p-8 rounded-2xl w-96 border border-slate-700">
+    <h2 class="text-2xl font-bold mb-4">Forgot Password</h2>
+    <input type="email" id="forgotEmail" placeholder="Email" class="w-full p-2 mb-3 rounded bg-slate-900 text-white border border-slate-700">
+    <button onclick="forgotPassword()" class="w-full bg-emerald-500 text-white p-2 rounded hover:bg-emerald-400">Send Reset Link</button>
+    <button onclick="closeModals()" class="w-full mt-2 text-slate-400">Cancel</button>
+  </div>
+</div>
+
+<!-- Reset Password Modal -->
+<!-- Reset Password Modal -->
+<div id="resetPasswordModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div class="bg-slate-800 p-8 rounded-2xl w-96 border border-slate-700">
+    <h2 class="text-2xl font-bold mb-4">Reset Password</h2>
+    <input type="password" id="resetPassword" placeholder="New Password" ...>
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" ...>
+    <button onclick="resetPassword()" class="w-full bg-emerald-500...">Reset Password</button>
+    <button onclick="closeModals()" class="w-full mt-2 text-slate-400">Cancel</button>  <!-- ✅ This should work -->
+  </div>
+</div>
+
+    <script>
+      // Modal functions
+      function showLoginModal() {
+        document.getElementById('loginModal').classList.remove('hidden');
+        document.getElementById('loginModal').classList.add('flex');
+      }
+
+      function showSignupModal() {
+        document.getElementById('signupModal').classList.remove('hidden');
+        document.getElementById('signupModal').classList.add('flex');
+      }
+      function closeModals() {
+  // Close Login Modal
+  const loginModal = document.getElementById('loginModal');
+  if (loginModal) {
+    loginModal.classList.add('hidden');
+    loginModal.classList.remove('flex');
+  }
+  
+  // Close Signup Modal
+  const signupModal = document.getElementById('signupModal');
+  if (signupModal) {
+    signupModal.classList.add('hidden');
+    signupModal.classList.remove('flex');
+  }
+  
+  // Close Forgot Password Modal
+  const forgotModal = document.getElementById('forgotPasswordModal');
+  if (forgotModal) {
+    forgotModal.classList.add('hidden');
+    forgotModal.classList.remove('flex');
+  }
+  
+  // Close Reset Password Modal
+  const resetModal = document.getElementById('resetPasswordModal');
+  if (resetModal) {
+    resetModal.classList.add('hidden');
+    resetModal.classList.remove('flex');
+  }
+  resetToken = null;
+}
+ 
+
+      // Auth functions
+      async function checkAuth() {
+        try {
+          const res = await fetch('/auth/me', {
+            credentials: 'include'
+          });
+          if (res.ok) {
+            const data = await res.json();
+            document.getElementById('userInfo').innerHTML = `Welcome, ${data.data.name}! 🎬`;
+            document.getElementById('authButtons').innerHTML = `
+              <button onclick="logout()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-400">Logout</button>
+            `;
+            return true;
+          } else {
+            document.getElementById('userInfo').innerHTML = '';
+            document.getElementById('authButtons').innerHTML = `
+              <button onclick="showLoginModal()" class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-400">Login</button>
+              <button onclick="showSignupModal()" class="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-400">Sign Up</button>
+            `;
+            return false;
+          }
+        } catch (error) {
+          console.log('Not authenticated');
+          return false;
+        }
+      }
+
+      async function login() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        const res = await fetch('/auth/sign-in', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await res.json();
+        if (data.success) {
+          closeModals();
+          await checkAuth();
+          run(); // Refresh seats after login
+          alert('Login successful!');
+        } else {
+          alert('Login failed: ' + data.message);
+        }
+      }
+
+      async function signup() {
+        const name = document.getElementById('signupName').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        
+        const res = await fetch('/auth/sign-up', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password, role: 'customer' })
+        });
+        
+        const data = await res.json();
+        if (data.success) {
+          alert('Signup successful! Please check your email for verification.');
+          closeModals();
+        } else {
+          alert('Signup failed: ' + data.message);
+        }
+      }
+
+      async function logout() {
+    try {
+        const response = await fetch('/auth/logout', {
+            method: 'POST',
+            credentials: 'include'  // Important: sends cookies
+        });
+        
+        if (response.ok) {
+            // Clear UI
+            document.getElementById('userInfo').innerHTML = '';
+            document.getElementById('authButtons').innerHTML = `
+                <button onclick="showLoginModal()" class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-400">Login</button>
+                <button onclick="showSignupModal()" class="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-400">Sign Up</button>
+            `;
+            
+            // Refresh seats
+            run();
+            alert('Logged out successfully!');
+        } else {
+            alert('Logout failed');
+        }
+    } catch (error) {
+        console.error('Logout error:', error);
+        alert('Error during logout');
+    }
+}
+      // Modified bookSeat function with auth check
+      async function bookSeatWithAuth(seatId, originalTd, baseClasses, originalId) {
+  // ✅ First check if logged in - don't proceed if not
+  const isLoggedIn = await checkAuth();
+  if (!isLoggedIn) {
+    alert('Please login first to book a seat!');
+    showLoginModal();
+    return false;
+  }
+  
+  try {
+    const name = prompt("Enter your name");
+    if (!name) return false;
+
+    const res = await fetch(`/${seatId}/${name}`, { 
+      method: "PUT",
+      credentials: 'include'
+    });
+    const data = await res.json();
+
+    if (data.error) {
+      alert("FAILED! Couldn't book! " + data.error);
+      return false;
+    } else {
+      alert("Booked successfully!");
+      originalTd.className = `${baseClasses} bg-rose-500/10 text-rose-500/60 border border-rose-500/20 cursor-not-allowed`;
+      originalTd.innerHTML = `
+        <span class="relative z-10">${originalId}</span>
+        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-4 py-2 bg-slate-900 border border-slate-700 text-sm text-slate-300 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap shadow-2xl z-50 pointer-events-none font-normal shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
+          Booked by: <span class="font-bold text-white ml-1">${name}</span>
+          <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-[6px] border-transparent border-t-slate-700"></div>
+          <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-[2px] border-[5px] border-transparent border-t-slate-900"></div>
+        </div>
+      `;
+      return true;
+    }
+  } catch (ex) {
+    alert("Error booking: " + ex);
+    return false;
+  }
+}
+
+  function showForgotPasswordModal() {
+  closeModals();
+  document.getElementById('forgotPasswordModal').classList.remove('hidden');
+  document.getElementById('forgotPasswordModal').classList.add('flex');
+}
+
+async function forgotPassword() {
+  const email = document.getElementById('forgotEmail').value;
+  
+  const res = await fetch('/auth/forgot-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  });
+  
+  const data = await res.json();
+  alert(data.message);
+  closeModals();
+}
+
+// Store token globally
+let resetToken = null;
+
+// Parse token from URL when page loads
+function getTokenFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('token');
+}
+
+// Check for reset token on page load
+if (getTokenFromUrl()) {
+  resetToken = getTokenFromUrl();
+  console.log("Reset token found:", resetToken);
+  setTimeout(() => {
+    showResetPasswordModal();
+  }, 100);
+}
+function showResetPasswordModal() {
+  console.log("Showing reset modal with token:", resetToken);  // Debug
+  document.getElementById('resetPasswordModal').classList.remove('hidden');
+  document.getElementById('resetPasswordModal').classList.add('flex');
+}
+
+async function resetPassword() {
+  const token = resetToken;
+  const password = document.getElementById('resetPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  
+  console.log("Token:", token);
+  console.log("Password:", password);
+  console.log("Confirm:", confirmPassword);
+  
+  if (!token) {
+    alert("Invalid reset token. Please request a new password reset link.");
+    return;
+  }
+  
+  if (!password || !confirmPassword) {
+    alert("Please fill in both password fields");
+    return;
+  }
+  
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters");
+    return;
+  }
+  
+  if (password !== confirmPassword) {
+    alert("Passwords don't match!");
+    return;
+  }
+  
+  try {
+    const res = await fetch('/auth/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, password, confirmPassword })
+    });
+    
+    const data = await res.json();
+    console.log("Full response:", data);
+    
+    // Check if response has success property
+    if (data && data.success === true) {
+      alert("Password reset successfully! Please login with your new password.");
+      resetToken = null;
+      // Clear the password fields
+      document.getElementById('resetPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+      closeModals();
+      showLoginModal();
+      // Clear the URL token
+      window.history.replaceState({}, document.title, "/");
+    } else {
+      alert("Reset failed: " + (data.message || "Unknown error"));
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error resetting password: " + error.message);
+  }
+}
+
+      async function run() {
+        const tbl = document.getElementById("tbl");
+        tbl.innerHTML = ''; // Clear existing content
+        const res = await fetch("/seats");
+        const resarray = await res.json();
+        const j = resarray.sort((a, b) => a.id - b.id);
+        let tr;
+        
+        for (let i = 0; i < j.length; i++) {
+          if (i % 8 === 0) tr = document.createElement("tr");
+
+          const td = document.createElement("td");
+
+          // Base aesthetic classes - added 'relative group' for tooltip positioning
+          const baseClasses =
+            "w-32 h-32 rounded-2xl text-center align-middle text-2xl font-bold transition-all duration-300 select-none relative group";
+
+          if (j[i].isbooked) {
+            td.className = `${baseClasses} bg-rose-500/10 text-rose-500/60 border border-rose-500/20 cursor-not-allowed`;
+            td.innerHTML = `
+              <span class="relative z-10">${j[i].id}</span>
+              <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-4 py-2 bg-slate-900 border border-slate-700 text-sm text-slate-300 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap shadow-2xl z-50 pointer-events-none font-normal shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
+                Booked by: <span class="font-bold text-white ml-1">${j[i].name}</span>
+                <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-[6px] border-transparent border-t-slate-700"></div>
+                <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-[2px] border-[5px] border-transparent border-t-slate-900"></div>
+              </div>
+            `;
+          } else {
+            td.className = `${baseClasses} bg-emerald-500 text-white border-2 border-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.3)] cursor-pointer hover:bg-emerald-400 hover:-translate-y-1.5 hover:shadow-[0_10px_25px_rgba(16,185,129,0.5)] active:scale-95 active:shadow-[0_0_10px_rgba(16,185,129,0.3)]`;
+            td.innerHTML = `<span class="relative z-10">${j[i].id}</span>`;
+          }
+
+          // Store the click handler with closure to capture current values
+          const seatId = j[i].id;
+          const currentTd = td;
+          const currentBaseClasses = baseClasses;
+          
+          td.addEventListener("click", async function (e) {
+            if (currentTd.classList.contains("cursor-not-allowed")) {
+              return; // Seat is already taken
+            }
+            await bookSeatWithAuth(seatId, currentTd, currentBaseClasses, seatId);
+          });
+          
+          tr.appendChild(td);
+          tbl.appendChild(tr);
+        }
+      }
+
+      // Initialize
+      checkAuth();
+      run();
+    </script>
+  </body>
+</html>
